@@ -1,0 +1,88 @@
+#create a table emp with attributes eid,ename,age,salary.
+
+CREATE TABLE emp (eid NUMBER(10),ename VARCHAR2(20),age NUMBER(10),salary NUMBER(10));
+
+#insert values.
+
+INSERT INTO emp VALUES (&eid,&ename,&age,&salary); 
+
+#display table.
+
+SELECT *FROM emp;
+eid	ename	age	salary
+1	Binil	32	56000
+2	Nobin	29	44000
+3	Abin	22	34000
+
+#find the count of employees.
+
+SELECT COUNT(ename) FROM emp;
+
+COUNT(ename)
+3
+
+#find the maximum age from table.
+
+SELECT MAX(age) FROM emp;
+
+MAX(age)
+32
+
+#find the minimum age from table.
+
+SELECT MIN(age) FROM emp;
+
+MIN(age)
+22
+
+#find the sum of salary,age from table.
+
+SELECT SUM(age),SUM(salary) FROM emp;
+SUM(age)	SUM(salary)
+83	134000
+
+#find the average age from table.
+
+SELECT AVG(age) FROM emp;
+AVG(age)
+27.666666666666668
+
+#create a view for name and age in table. 
+
+CREATE  VIEW A AS SELECT ename,age FROM emp;
+
+#display view.
+
+SELECT * FROM A;
+ename	age
+Binil	32
+Nobin	29
+Abin	22
+
+#create a view to store eid,ename,salary.
+
+CREATE VIEW B AS SELECT eid,ename,salary FROM emp;
+
+SELECT * FROM B;
+
+eid	ename	salary
+1	Binil	56000
+2	Nobin	44000
+3	Abin	34000
+
+#display the name of the employee in the decreasing order of salary.
+
+SELECT ename FROM emp ORDER BY salary DESC;
+
+ename
+Binil
+Nobin
+Abin
+
+#display the name of the employee in the ascending order of age.
+
+SELECT ename FROM emp ORDER BY age;
+ename
+Abin
+Nobin
+Binil
