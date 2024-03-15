@@ -1,0 +1,105 @@
+SQL>CREATE TABLE sailors(sid NUMBER(10) PRIMARY KEY, sname VARCHAR2(20), rating NUMBER(10), age NUMBER(2)); 
+SQL>CREATE TABLE boats(bid NUMBER(10) PRIMARY KEY,bname VARCHAR2(20), color VARCHAR2(20));
+SQL>CREATE TABLE reserves(sid INT REFERENCES sailors(sid), bid INT REFERENCES boats(bid),day DATE);
+
+SQL> SELECT  * FROM sailors;
+
+       SID SNAME                    RATING        AGE
+---------- -------------------- ---------- ----------
+        22 Dustin                        7         45
+        29 Brutas                        1         33
+        31 Lubber                        8         55
+        32 Andy                          8         25
+        58 Rusty                        10         35
+        64 Horatio                       7         35
+        71 Zorba                        10         16
+        74 Horatio                       9         35
+        85 Art                           3         26
+        95 Bob                           3         64
+
+10 rows selected.
+
+SQL> SELECT * FROM boats;
+
+       BID BNAME                COLOR
+---------- -------------------- --------------------
+       101 Interlake            Blue
+       102 Interlake            Red
+       103 Clipper              Green
+       104 Marine               Red
+
+SQL> SELECT * FROM RESERVES;
+
+       SID        BID DAY
+---------- ---------- ---------
+        22        101 10-OCT-98
+        22        102 10-OCT-98
+        22        103 10-AUG-98
+        22        104 10-JUL-98
+        31        102 11-OCT-98
+        31        103 11-JUN-98
+        64        101 09-MAY-98
+        64        102 09-AUG-98
+        74        103 09-AUG-98
+
+9 rows selected.
+
+SQL> SELECT sname,age FROM sailors;
+
+SNAME                       AGE
+-------------------- ----------
+Dustin                       45
+Brutas                       33
+Lubber                       55
+Andy                         25
+Rusty                        35
+Horatio                      35
+Zorba                        16
+Horatio                      35
+Art                          26
+Bob                          64
+
+10 rows selected.
+
+SQL> SELECT * FROM sailors WHERE sid IN (SELECT sid FROM resErves WHERE bid =101);
+
+       SID SNAME                    RATING        AGE
+---------- -------------------- ---------- ----------
+        22 Dustin                        7         45
+        64 Horatio                       7         35
+
+SQL>  SELECT * FROM sailors WHERE rating > '7';
+
+       SID SNAME                    RATING        AGE
+---------- -------------------- ---------- ----------
+        31 Lubber                        8         55
+        32 Andy                          8         25
+        58 Rusty                        10         35
+        71 Zorba                        10         16
+        74 Horatio                       9         35
+
+SQL> SELECT sname FROM sailors WHERE sid IN (SELECT sid FROM reserves WHERE bid =103);
+
+SNAME
+--------------------
+Dustin
+Lubber
+Horatio
+
+
+SQL> SELECT sailors.sname FROM sailors JOIN reserves ON sailors.sid =reserves.sid JOIN boats ON reserves.bid=boats.bid WHERE boats.color='Red' ORDER BY sailors.age;
+
+SNAME
+--------------------
+Horatio
+Dustin
+Dustin
+Lubber
+
+SQL> SELECT DISTINCT sailors.sname FROM sailors JOIN reserves ON sailors.sid =reserves.sid JOIN boats ON reserves.bid=boats.bid WHERE boats.color='Red' OR boats.color='Green';
+
+SNAME
+--------------------
+Lubber
+Dustin
+Horatio

@@ -1,0 +1,112 @@
+SQL> CREATE TABLE emp (eid NUMBER(10),ename VARCHAR2(20),age NUMBER(10),salary NUMBER(10));
+
+Table created.
+
+SQL> INSERT INTO emp VALUES (&eid,'&ename',&age,&salary);
+Enter value for eid: 1
+Enter value for ename: Binil
+Enter value for age: 32
+Enter value for salary: 56000
+old   1: INSERT INTO emp VALUES (&eid,'&ename',&age,&salary)
+new   1: INSERT INTO emp VALUES (1,'Binil',32,56000)
+
+1 row created.
+
+SQL> INSERT INTO emp VALUES (&eid,'&ename',&age,&salary);
+Enter value for eid: 2
+Enter value for ename: Nobin
+Enter value for age: 29
+Enter value for salary: 44000
+old   1: INSERT INTO emp VALUES (&eid,'&ename',&age,&salary)
+new   1: INSERT INTO emp VALUES (2,'Nobin',29,44000)
+
+1 row created.
+
+SQL> INSERT INTO emp VALUES (&eid,'&ename',&age,&salary);
+Enter value for eid: 3
+Enter value for ename: Abin
+Enter value for age: 22
+Enter value for salary: 34000
+old   1: INSERT INTO emp VALUES (&eid,'&ename',&age,&salary)
+new   1: INSERT INTO emp VALUES (3,'Abin',22,34000)
+
+1 row created.
+
+SQL> SELECT *FROM emp;
+
+       EID ENAME                       AGE     SALARY
+---------- -------------------- ---------- ----------
+         1 Binil                        32      56000
+         2 Nobin                        29      44000
+         3 Abin                         22      34000
+
+SQL> SELECT COUNT(ename) FROM emp;
+
+COUNT(ENAME)
+------------
+           3
+
+SQL> SELECT MAX(age) FROM emp;
+
+  MAX(AGE)
+----------
+        32
+
+SQL> SELECT MIN(age) FROM emp;
+
+  MIN(AGE)
+----------
+        22
+
+SQL> SELECT SUM(age),SUM(salary) FROM emp;
+
+  SUM(AGE) SUM(SALARY)
+---------- -----------
+        83      134000
+
+SQL> SELECT AVG(age) FROM emp;
+
+  AVG(AGE)
+----------
+27.6666667
+
+SQL> CREATE  VIEW A AS SELECT ename,age FROM emp;
+
+View created.
+
+SQL> SELECT * FROM A;
+
+ENAME                       AGE
+-------------------- ----------
+Binil                        32
+Nobin                        29
+Abin                         22
+
+SQL> CREATE VIEW B AS SELECT eid,ename,salary FROM emp;
+
+View created.
+
+SQL> SELECT * FROM B;
+
+       EID ENAME                    SALARY
+---------- -------------------- ----------
+         1 Binil                     56000
+         2 Nobin                     44000
+         3 Abin                      34000
+
+SQL> SELECT ename FROM emp ORDER BY salary DESC;
+
+ENAME
+--------------------
+Binil
+Nobin
+Abin
+
+SQL>
+SQL> SELECT ename FROM emp ORDER BY age;
+
+ENAME
+--------------------
+Abin
+Nobin
+Binil
